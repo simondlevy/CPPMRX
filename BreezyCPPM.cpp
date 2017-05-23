@@ -96,7 +96,7 @@ void BreezyCPPM::BreezyCPPM_isr()
  * @params:
  * @returns:
  */
-void BreezyCPPM::computeRC()
+void BreezyCPPM::computeRC(int16_t rcData[RC_CHANS])
 {
     static uint16_t rcData4Values[RC_CHANS][4], rcDataMean[RC_CHANS];
     static uint8_t rc4ValuesIndex = 0;

@@ -2,8 +2,6 @@
 
 BreezyCPPM rx(4, 5);
 
-int16_t  rcData[RC_CHANS];
-
 void setup(void)
 {
     Serial.begin(115200);
@@ -13,7 +11,9 @@ void setup(void)
 
 void loop(void)
 {
-    rx.computeRC();
+    int16_t rcData[8];
+
+    rx.computeRC(rcData);
 
     for (int k=0; k<5; ++k) {
         Serial.print(rcData[k]);

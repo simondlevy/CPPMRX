@@ -3,15 +3,15 @@
 
 #define RC_CHANS 6
 
-extern int16_t   rcData[];
-
 class BreezyCPPM
 {
     public:
 
         BreezyCPPM(int pin, int nchan);
+
         void begin();
-        void computeRC();
+
+        void computeRC(int16_t rcData[8]);
 
     private:
 
