@@ -1,6 +1,8 @@
 #include <BreezyCPPM.h>
 
-#define RXPIN 4
+// Pin 11 will work on Teensy 3.X, Ladybug; Pin 3 will work on Arduino Uno
+#define RXPIN 3 //11
+
 #define NCHAN 5
 
 BreezyCPPM rx(RXPIN, NCHAN);

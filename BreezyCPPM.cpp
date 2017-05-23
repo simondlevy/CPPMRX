@@ -19,7 +19,7 @@ void BreezyCPPM::begin()
 {
     pinMode(_pin, INPUT);
 
-    attachInterrupt(_pin, isr, RISING);
+    attachInterrupt(digitalPinToInterrupt(_pin), isr, RISING);
 
     for (uint8_t k=0; k<_nchan; ++k) {
         rcvr[k] = 1500;
