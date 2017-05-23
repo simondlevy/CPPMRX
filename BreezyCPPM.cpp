@@ -51,8 +51,7 @@ void BreezyCPPM::isr()
             // This indicates that we received an correct frame = push to the "main" PPM array
             // if we received an broken frame, it will get ignored here and later get over-written
             // by new data, that will also be checked for sanity.
-            for (uint8_t i = 0; i < MAX_CHANS; i++)
-            {
+            for (uint8_t i = 0; i < MAX_CHANS; i++) {
                 rcvr[i] = ppmTmp[i];             
             }
         }
@@ -61,8 +60,7 @@ void BreezyCPPM::isr()
         ppmCounter = 0;
     } else {  
         // extra channels will get ignored here
-        if (ppmCounter < MAX_CHANS)
-        {   
+        if (ppmCounter < MAX_CHANS) {   
             // Store measured pulse length in us
             ppmTmp[ppmCounter] = pulseWidth;
 
@@ -94,7 +92,7 @@ void BreezyCPPM::computeRC(int16_t rcData[])
         rcDataMean[chan] = 0;
         for (a=0; a<4; a++) rcDataMean[chan] += rcData4Values[chan][a];
         rcDataMean[chan]= (rcDataMean[chan] + 2) >> 2;
-        if ( rcDataMean[chan] < (uint16_t)rcData[chan] - 3)  rcData[chan] = rcDataMean[chan] + 2;
-        if ( rcDataMean[chan] > (uint16_t)rcData[chan] + 3)  rcData[chan] = rcDataMean[chan] - 2;
+        if (rcDataMean[chan] < (uint16_t)rcData[chan] - 3) rcData[chan] = rcDataMean[chan] + 2;
+        if (rcDataMean[chan] > (uint16_t)rcData[chan] + 3) rcData[chan] = rcDataMean[chan] - 2;
     }
 }
