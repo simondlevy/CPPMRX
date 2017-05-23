@@ -1,6 +1,9 @@
 #ifndef BreezyCPPM_h
 #define BreezyCPPM_h
 
+#define PPM_MINPULSE  700
+#define PPM_MAXPULSE  2250
+#define PPM_SYNCPULSE 7500                                                                                                                       
 class BreezyCPPM
 {
     public:

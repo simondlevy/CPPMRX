@@ -3,14 +3,11 @@
 
 #define MAX_CHANS 6
 
-#define PPM_MINPULSE  700
-#define PPM_MAXPULSE  2250
-#define PPM_SYNCPULSE 7500                                                                                                                       
-volatile uint16_t RCVR[MAX_CHANS];
-volatile uint16_t PPM_temp[MAX_CHANS];
+volatile uint16_t ppmTmp[MAX_CHANS];
 volatile uint32_t startPulse;
 volatile uint8_t  ppmCounter;
 volatile uint16_t ppmError;
+volatile uint16_t rcvr[MAX_CHANS];
 
 BreezyCPPM::BreezyCPPM(int pin, int nchan)
 {
@@ -25,8 +22,8 @@ void BreezyCPPM::begin()
     attachInterrupt(_pin, BreezyCPPM_isr, RISING);
 
     for (uint8_t k=0; k<_nchan; ++k) {
-        RCVR[k] = 1500;
-        PPM_temp[k] = 1500;
+        rcvr[k] = 1500;
+        ppmTmp[k] = 1500;
     }
 
     ppmCounter = MAX_CHANS;
@@ -56,7 +53,7 @@ void BreezyCPPM::BreezyCPPM_isr()
             // by new data, that will also be checked for sanity.
             for (uint8_t i = 0; i < MAX_CHANS; i++)
             {
-                RCVR[i] = PPM_temp[i];             
+                rcvr[i] = ppmTmp[i];             
             }
         }
 
@@ -67,7 +64,7 @@ void BreezyCPPM::BreezyCPPM_isr()
         if (ppmCounter < MAX_CHANS)
         {   
             // Store measured pulse length in us
-            PPM_temp[ppmCounter] = pulseWidth;
+            ppmTmp[ppmCounter] = pulseWidth;
 
             // Advance to next channel
             ppmCounter++;
@@ -88,7 +85,7 @@ void BreezyCPPM::computeRC(int16_t rcData[])
     rc4ValuesIndex++;
     if (rc4ValuesIndex == 4) rc4ValuesIndex = 0;
 
-    for (int k=0; k<5; ++k) { rawRC[k] = RCVR[k];
+    for (int k=0; k<5; ++k) { rawRC[k] = rcvr[k];
     }
 
     for (chan = 0; chan < _nchan; chan++) {
