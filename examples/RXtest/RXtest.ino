@@ -1,6 +1,6 @@
 #include <BreezyCPPM.h>
 
-BreezyCPPM rx;
+BreezyCPPM rx(10, 5);
 
 int16_t  rcData[RC_CHANS];
 uint32_t rawRC[RC_CHANS];
@@ -9,7 +9,7 @@ void setup(void)
 {
     Serial.begin(115200);
 
-    rx.configureReceiver();
+    rx.begin();
 }
 
 void loop(void)

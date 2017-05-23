@@ -8,15 +8,19 @@ extern uint32_t  rawRC[];
 
 class BreezyCPPM
 {
-  public:
-                 BreezyCPPM();
-     void        configureReceiver();
-     void        readRawRC();
-     void        computeRC();
+    public:
 
-  private:
+        BreezyCPPM(int pin, int nchan);
+        void begin();
+        void computeRC();
 
-    static void  BreezyCPPM_isr();
+    private:
+
+        int _pin;
+        int _nchan;
+
+        void         readRawRC();
+        static void  BreezyCPPM_isr();
 };
 
 #endif // BreezyCPPM_h

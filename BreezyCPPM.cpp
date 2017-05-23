@@ -1,19 +1,6 @@
 #include "Arduino.h"
 #include "BreezyCPPM.h"
 
-#define BreezyCPPM_PIN 10
-
-#define PULSE_POS_ROLL   0
-#define PULSE_POS_PITCH  1
-#define PULSE_POS_YAW    2
-#define PULSE_POS_THR    3
-#define PULSE_POS_AUX1   4
-#define PULSE_POS_AUX2   5
-
-BreezyCPPM::BreezyCPPM()
-{
-}
-
 #define PPM_MINPULSE  700
 #define PPM_MAXPULSE  2250
 #define PPM_SYNCPULSE 7500                                                                                                                       
@@ -23,6 +10,12 @@ volatile uint32_t startPulse = 0;
 volatile uint8_t  ppmCounter = RC_CHANS;
 volatile uint16_t PPM_error = 0;
 
+BreezyCPPM::BreezyCPPM(int pin, int nchan)
+{
+    _pin = pin;
+    _nchan = nchan;
+}
+
 /**
  * @fn: configureReceiver()
  *
@@ -30,10 +23,10 @@ volatile uint16_t PPM_error = 0;
  * @params:
  * @returns:
  */  
-void BreezyCPPM::configureReceiver()
+void BreezyCPPM::begin()
 {
-    pinMode(BreezyCPPM_PIN, INPUT);
-    attachInterrupt(BreezyCPPM_PIN, BreezyCPPM_isr, RISING);
+    pinMode(_pin, INPUT);
+    attachInterrupt(_pin, BreezyCPPM_isr, RISING);
     for (uint8_t i=0; i < RC_CHANS; i++)
     {
         RCVR[i] = 1500;
@@ -105,12 +98,9 @@ void BreezyCPPM::BreezyCPPM_isr()
  */
 void BreezyCPPM::readRawRC()
 {
-    rawRC[0] = RCVR[PULSE_POS_ROLL];
-    rawRC[1] = RCVR[PULSE_POS_PITCH];
-    rawRC[2] = RCVR[PULSE_POS_YAW];
-    rawRC[3] = RCVR[PULSE_POS_THR];
-    rawRC[4] = RCVR[PULSE_POS_AUX1];
-    rawRC[5] = RCVR[PULSE_POS_AUX2];
+    for (int k=0; k<5; ++k) {
+        rawRC[k] = RCVR[k];
+    }
 }
 
 /**
