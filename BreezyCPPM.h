@@ -1,8 +1,6 @@
 #ifndef BreezyCPPM_h
 #define BreezyCPPM_h
 
-#define RC_CHANS 6
-
 class BreezyCPPM
 {
     public:
@@ -11,7 +9,7 @@ class BreezyCPPM
 
         void begin();
 
-        void computeRC(int16_t rcData[8]);
+        void computeRC(int16_t rcData[]);
 
     private:
 

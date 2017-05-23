@@ -1,6 +1,8 @@
 #include "Arduino.h"
 #include "BreezyCPPM.h"
 
+#define RC_CHANS 6
+
 #define PPM_MINPULSE  700
 #define PPM_MAXPULSE  2250
 #define PPM_SYNCPULSE 7500                                                                                                                       
@@ -96,7 +98,7 @@ void BreezyCPPM::BreezyCPPM_isr()
  * @params:
  * @returns:
  */
-void BreezyCPPM::computeRC(int16_t rcData[RC_CHANS])
+void BreezyCPPM::computeRC(int16_t rcData[])
 {
     static uint16_t rcData4Values[RC_CHANS][4], rcDataMean[RC_CHANS];
     static uint8_t rc4ValuesIndex = 0;
