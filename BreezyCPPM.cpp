@@ -8,9 +8,9 @@
 #define PPM_SYNCPULSE 7500                                                                                                                       
 volatile uint16_t RCVR[MAX_CHANS];
 volatile uint16_t PPM_temp[MAX_CHANS];
-volatile uint32_t startPulse = 0;
+volatile uint32_t startPulse;
 volatile uint8_t  ppmCounter;
-volatile uint16_t PPM_error = 0;
+volatile uint16_t ppmError;
 
 BreezyCPPM::BreezyCPPM(int pin, int nchan)
 {
@@ -29,7 +29,9 @@ void BreezyCPPM::begin()
         PPM_temp[k] = 1500;
     }
 
-    ppmCounter = _nchan;
+    ppmCounter = MAX_CHANS;
+    ppmCounter = 0;
+    ppmError = 0;
 }
 
 void BreezyCPPM::BreezyCPPM_isr()
@@ -41,7 +43,7 @@ void BreezyCPPM::BreezyCPPM_isr()
 
     // Error sanity check
     if (pulseWidth < PPM_MINPULSE || (pulseWidth > PPM_MAXPULSE && pulseWidth < PPM_SYNCPULSE)) {
-        PPM_error++;
+        ppmError++;
 
         // set ppmCounter out of range so rest and (later on) whole frame is dropped
         ppmCounter = MAX_CHANS + 1;
