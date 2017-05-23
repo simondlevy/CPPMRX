@@ -90,20 +90,6 @@ void BreezyCPPM::BreezyCPPM_isr()
 }
 
 /**
- * @fn: readRawRC()
- *
- * @brief: Assigns raw cPPM BreezyCPPM pulse duration data to the correct RC channel
- * @params:
- * @returns:
- */
-void BreezyCPPM::readRawRC()
-{
-    for (int k=0; k<5; ++k) {
-        rawRC[k] = RCVR[k];
-    }
-}
-
-/**
  * @fn: computeRC()
  *
  * @brief: Calculates and assigns smoothed RC data to the correct channel
@@ -115,10 +101,15 @@ void BreezyCPPM::computeRC()
     static uint16_t rcData4Values[RC_CHANS][4], rcDataMean[RC_CHANS];
     static uint8_t rc4ValuesIndex = 0;
     uint8_t chan,a;
+    uint32_t rawRC[RC_CHANS];
 
     rc4ValuesIndex++;
     if (rc4ValuesIndex == 4) rc4ValuesIndex = 0;
-    BreezyCPPM::readRawRC();
+
+    for (int k=0; k<5; ++k) {
+        rawRC[k] = RCVR[k];
+    }
+
     for (chan = 0; chan < RC_CHANS; chan++)
     {
         rcData4Values[chan][rc4ValuesIndex] = rawRC[chan];

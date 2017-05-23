@@ -1,9 +1,8 @@
 #include <BreezyCPPM.h>
 
-BreezyCPPM rx(10, 5);
+BreezyCPPM rx(4, 5);
 
 int16_t  rcData[RC_CHANS];
-uint32_t rawRC[RC_CHANS];
 
 void setup(void)
 {

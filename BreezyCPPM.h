@@ -4,7 +4,6 @@
 #define RC_CHANS 6
 
 extern int16_t   rcData[];
-extern uint32_t  rawRC[];
 
 class BreezyCPPM
 {
@@ -19,7 +18,6 @@ class BreezyCPPM
         int _pin;
         int _nchan;
 
-        void         readRawRC();
         static void  BreezyCPPM_isr();
 };
 
