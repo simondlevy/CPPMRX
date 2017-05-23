@@ -14,7 +14,9 @@ BreezyCPPM::BreezyCPPM()
 {
 }
 
-#define BreezyCPPM_PPM_SYNCPULSE 7500                                                                                                                        // 2.5ms
+#define PPM_MINPULSE  700
+#define PPM_MAXPULSE  2250
+#define PPM_SYNCPULSE 7500                                                                                                                       
 volatile uint16_t RCVR[RC_CHANS];
 volatile uint16_t PPM_temp[RC_CHANS];
 volatile uint32_t startPulse = 0;
@@ -53,15 +55,15 @@ void BreezyCPPM::BreezyCPPM_isr()
     // clear channel interrupt flag (CHF)
     volatile uint32_t pulseWidth = stopPulse - startPulse;
 
-    // Error sanity check; if pulseWidth < 900us or pulseWidth > 2100us and pulseWidth < BreezyCPPM_PPM_SYNCPULSE
-    if (pulseWidth < 900 || (pulseWidth > 2100 && pulseWidth < BreezyCPPM_PPM_SYNCPULSE))
+    // Error sanity check
+    if (pulseWidth < PPM_MINPULSE || (pulseWidth > PPM_MAXPULSE && pulseWidth < PPM_SYNCPULSE))
     {
         PPM_error++;
 
         // set ppmCounter out of range so rest and (later on) whole frame is dropped
         ppmCounter = RC_CHANS + 1;
     }
-    if (pulseWidth >= BreezyCPPM_PPM_SYNCPULSE)
+    if (pulseWidth >= PPM_SYNCPULSE)
     {
         // Verify if this is the sync pulse
         if (ppmCounter <= RC_CHANS)
