@@ -19,7 +19,7 @@ class BreezyCPPM
         int _pin;
         int _nchan;
 
-        static void  BreezyCPPM_isr();
+        static void  isr();
 };
 
 #endif // BreezyCPPM_h

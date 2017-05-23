@@ -19,7 +19,7 @@ void BreezyCPPM::begin()
 {
     pinMode(_pin, INPUT);
 
-    attachInterrupt(_pin, BreezyCPPM_isr, RISING);
+    attachInterrupt(_pin, isr, RISING);
 
     for (uint8_t k=0; k<_nchan; ++k) {
         rcvr[k] = 1500;
@@ -31,7 +31,7 @@ void BreezyCPPM::begin()
     ppmError = 0;
 }
 
-void BreezyCPPM::BreezyCPPM_isr()
+void BreezyCPPM::isr()
 {
     uint32_t stopPulse = micros();
 
@@ -85,7 +85,8 @@ void BreezyCPPM::computeRC(int16_t rcData[])
     rc4ValuesIndex++;
     if (rc4ValuesIndex == 4) rc4ValuesIndex = 0;
 
-    for (int k=0; k<5; ++k) { rawRC[k] = rcvr[k];
+    for (int k=0; k<_nchan; ++k) { 
+        rawRC[k] = rcvr[k];
     }
 
     for (chan = 0; chan < _nchan; chan++) {

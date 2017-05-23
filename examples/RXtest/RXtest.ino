@@ -1,6 +1,9 @@
 #include <BreezyCPPM.h>
 
-BreezyCPPM rx(4, 5);
+#define RXPIN 4
+#define NCHAN 5
+
+BreezyCPPM rx(RXPIN, NCHAN);
 
 void setup(void)
 {
@@ -11,11 +14,11 @@ void setup(void)
 
 void loop(void)
 {
-    int16_t rcData[8];
+    int16_t rcData[5];
 
     rx.computeRC(rcData);
 
-    for (int k=0; k<5; ++k) {
+    for (int k=0; k<NCHAN; ++k) {
         Serial.print(rcData[k]);
         Serial.print(" ");
     }
