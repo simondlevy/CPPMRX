@@ -58,6 +58,8 @@ void BreezyCPPM::isr()
     // clear channel interrupt flag (CHF)
     volatile uint32_t pulseWidth = stopPulse - startPulse;
 
+    Serial.println(pulseWidth);
+
     // Error sanity check
     if (pulseWidth < PPM_MINPULSE || (pulseWidth > PPM_MAXPULSE && pulseWidth < PPM_SYNCPULSE)) {
         ppmError++;
