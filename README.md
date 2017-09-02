@@ -1,4 +1,4 @@
-<img src="frskyrx.png">
+<img src="frskyrx.png" width=300>
 
 This repository contains a little Arduino library for reading the so-called
 CPPM (Combined Pulse-Pulse Modulation) signal from an R/C receiver like the
