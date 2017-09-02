@@ -1,3 +1,5 @@
+<img src="frskyrx.png">
+
 This repository contains a little Arduino library for reading the so-called
 CPPM (Combined Pulse-Pulse Modulation) signal from an R/C receiver like the
 FrSky Micro RX.  Although other such libraries exist, I wanted one that was (1)
