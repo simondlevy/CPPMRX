@@ -18,8 +18,7 @@
    along with BreezyCPPM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BreezyCPPM_h
-#define BreezyCPPM_h
+#pragma once
 
 #define PPM_MINPULSE  700
 #define PPM_MAXPULSE  2250
@@ -28,18 +27,16 @@ class BreezyCPPM
 {
     public:
 
-        BreezyCPPM(int pin, int nchan);
+        BreezyCPPM(uint8_t pin, uint8_t nchan);
 
         void begin();
 
-        void computeRC(int16_t rcData[]);
+        void computeRC(uint16_t rcData[]);
 
     private:
 
-        int _pin;
-        int _nchan;
+        uint8_t _pin;
+        uint8_t _nchan;
 
         static void  isr();
 };
-
-#endif // BreezyCPPM_h

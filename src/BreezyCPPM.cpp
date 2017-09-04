@@ -21,7 +21,7 @@
 #include "Arduino.h"
 #include "BreezyCPPM.h"
 
-#define MAX_CHANS 6
+static const uint8_t MAX_CHANS = 6;
 
 volatile uint16_t ppmTmp[MAX_CHANS];
 volatile uint32_t startPulse;
@@ -29,7 +29,7 @@ volatile uint8_t  ppmCounter;
 volatile uint16_t ppmError;
 volatile uint16_t rcvr[MAX_CHANS];
 
-BreezyCPPM::BreezyCPPM(int pin, int nchan)
+BreezyCPPM::BreezyCPPM(uint8_t pin, uint8_t nchan)
 {
     _pin = pin;
     _nchan = nchan;
@@ -93,24 +93,23 @@ void BreezyCPPM::isr()
     startPulse = stopPulse;
 }
 
-void BreezyCPPM::computeRC(int16_t rcData[])
+void BreezyCPPM::computeRC(uint16_t rcData[])
 {
     static uint16_t rcData4Values[MAX_CHANS][4], rcDataMean[MAX_CHANS];
     static uint8_t rc4ValuesIndex = 0;
-    uint8_t chan,a;
     uint32_t rawRC[MAX_CHANS];
 
     rc4ValuesIndex++;
     if (rc4ValuesIndex == 4) rc4ValuesIndex = 0;
 
-    for (int k=0; k<_nchan; ++k) { 
+    for (uint8_t k=0; k<_nchan; ++k) { 
         rawRC[k] = rcvr[k];
     }
 
-    for (chan = 0; chan < _nchan; chan++) {
+    for (uint8_t chan=0; chan < _nchan; chan++) {
         rcData4Values[chan][rc4ValuesIndex] = rawRC[chan];
         rcDataMean[chan] = 0;
-        for (a=0; a<4; a++) rcDataMean[chan] += rcData4Values[chan][a];
+        for (uint8_t a=0; a<4; a++) rcDataMean[chan] += rcData4Values[chan][a];
         rcDataMean[chan]= (rcDataMean[chan] + 2) >> 2;
         if (rcDataMean[chan] < (uint16_t)rcData[chan] - 3) rcData[chan] = rcDataMean[chan] + 2;
         if (rcDataMean[chan] > (uint16_t)rcData[chan] + 3) rcData[chan] = rcDataMean[chan] - 2;

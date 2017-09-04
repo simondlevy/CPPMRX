@@ -22,11 +22,11 @@
 
 // For usable pins on Arduino boards see https://www.arduino.cc/en/Reference/AttachInterrupt.
 // Other boards (Teensy, Ladybug) support interrupts on all digital pins.
-static const uint8_t RXPIN = 11;
+static const uint8_t RXPIN = 0;
 
 static const uint8_t NCHAN  = 5;
 
-BreezyCPPM rx(RXPIN, NCHAN);
+static BreezyCPPM rx(RXPIN, NCHAN);
 
 void setup(void)
 {
@@ -37,11 +37,11 @@ void setup(void)
 
 void loop(void)
 {
-    int16_t rcData[5];
+    uint16_t rcData[5];
 
     rx.computeRC(rcData);
 
-    for (int k=0; k<NCHAN; ++k) {
+    for (uint8_t k=0; k<NCHAN; ++k) {
         Serial.print(rcData[k]);
         Serial.print(" ");
     }
