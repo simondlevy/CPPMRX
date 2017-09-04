@@ -3,7 +3,7 @@
 This repository contains a little Arduino library that uses 
 <a href="https://en.wikipedia.org/wiki/Interrupt">interrupts</a> to read
 the so-called CPPM (Combined Pulse-Pulse Modulation) signal from an R/C
-receiver like the FrSky Micro RX.  Although other such libraries exist, I
+receiver like the FrSky Micro RX pictured above.  Although other such libraries exist, I
 wanted one that (1) was absolutely minimal (no assumptions about channel
 identities like pitch, roll; no hardware-specific optimizations) and (2) would
 work with all Arduino-compatible hardware (e.g., Arduino Uno; Teensy; and
