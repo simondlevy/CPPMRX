@@ -23,11 +23,11 @@
 
 static const uint8_t MAX_CHANS = 6;
 
-volatile uint16_t ppmTmp[MAX_CHANS];
-volatile uint32_t startPulse;
-volatile uint8_t  ppmCounter;
-volatile uint16_t ppmError;
-volatile uint16_t rcvr[MAX_CHANS];
+static volatile uint16_t ppmTmp[MAX_CHANS];
+static volatile uint32_t startPulse;
+static volatile uint8_t  ppmCounter;
+static volatile uint16_t ppmError;
+static volatile uint16_t rcvr[MAX_CHANS];
 
 BreezyCPPM::BreezyCPPM(uint8_t pin, uint8_t nchan)
 {
