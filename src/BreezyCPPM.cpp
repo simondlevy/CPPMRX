@@ -28,6 +28,7 @@ static volatile uint32_t startPulse;
 static volatile uint8_t  ppmCounter;
 static volatile uint16_t ppmError;
 static volatile uint16_t rcvr[MAX_CHANS];
+static volatile bool got_new_frame;
 
 BreezyCPPM::BreezyCPPM(uint8_t pin, uint8_t nchan)
 {
@@ -68,7 +69,7 @@ void BreezyCPPM::isr()
     if (pulseWidth >= PPM_SYNCPULSE) {
         // Verify if this is the sync pulse
         if (ppmCounter <= MAX_CHANS) {
-            // This indicates that we received an correct frame = push to the "main" PPM array
+            // This indicates that we received a correct frame = push to the "main" PPM array
             // if we received an broken frame, it will get ignored here and later get over-written
             // by new data, that will also be checked for sanity.
             for (uint8_t i = 0; i < MAX_CHANS; i++) {
@@ -78,6 +79,9 @@ void BreezyCPPM::isr()
 
         // restart the channel counter
         ppmCounter = 0;
+
+        got_new_frame = true;
+
     } else {  
         // extra channels will get ignored here
         if (ppmCounter < MAX_CHANS) {   
@@ -91,6 +95,15 @@ void BreezyCPPM::isr()
 
     // Save time at pulse start
     startPulse = stopPulse;
+}
+
+bool BreezyCPPM::gotNewFrame(void)
+{
+    bool retval = got_new_frame;
+    if (got_new_frame) {
+        got_new_frame = false;
+    }
+    return retval;
 }
 
 void BreezyCPPM::computeRC(uint16_t rcData[])

@@ -31,6 +31,8 @@ class BreezyCPPM
 
         void begin();
 
+        bool gotNewFrame(void);
+
         void computeRC(uint16_t rcData[]);
 
     private:

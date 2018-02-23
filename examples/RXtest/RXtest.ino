@@ -37,7 +37,7 @@ void setup(void)
 
 void loop(void)
 {
-    uint16_t rcData[5];
+    uint16_t rcData[NCHAN];
 
     rx.computeRC(rcData);
 
