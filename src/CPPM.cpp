@@ -1,25 +1,25 @@
 /*
-   Implementation of BreezyCPPM class library for Arduino
+   Implementation of CPPM class library for Arduino
 
    Copyright (C) 2017 Greg Tomasch and Simon D. Levy
 
-   This file is part of BreezyCPPM.
+   This file is part of CPPM.
 
-   BreezyCPPM is free software: you can redistribute it and/or modify
+   CPPM is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-   BreezyCPPM is distributed in the hope that it will be useful,
+   CPPM is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
    You should have received a copy of the GNU General Public License
-   along with BreezyCPPM.  If not, see <http://www.gnu.org/licenses/>.
+   along with CPPM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "Arduino.h"
-#include "BreezyCPPM.h"
+#include "CPPM.h"
 
 static const uint8_t MAX_CHANS = 6;
 
@@ -30,13 +30,13 @@ static volatile uint16_t ppmError;
 static volatile uint16_t rcvr[MAX_CHANS];
 static volatile bool got_new_frame;
 
-BreezyCPPM::BreezyCPPM(uint8_t pin, uint8_t nchan)
+CPPM::CPPM(uint8_t pin, uint8_t nchan)
 {
     _pin = pin;
     _nchan = nchan;
 }
 
-void BreezyCPPM::begin()
+void CPPM::begin()
 {
     pinMode(_pin, INPUT);
 
@@ -52,7 +52,7 @@ void BreezyCPPM::begin()
     ppmError = 0;
 }
 
-void BreezyCPPM::isr()
+void CPPM::isr()
 {
     uint32_t stopPulse = micros();
 
@@ -97,7 +97,7 @@ void BreezyCPPM::isr()
     startPulse = stopPulse;
 }
 
-bool BreezyCPPM::gotNewFrame(void)
+bool CPPM::gotNewFrame(void)
 {
     bool retval = got_new_frame;
     if (got_new_frame) {
@@ -106,7 +106,7 @@ bool BreezyCPPM::gotNewFrame(void)
     return retval;
 }
 
-void BreezyCPPM::computeRC(uint16_t rcData[])
+void CPPM::computeRC(uint16_t rcData[])
 {
     static uint16_t rcData4Values[MAX_CHANS][4], rcDataMean[MAX_CHANS];
     static uint8_t rc4ValuesIndex = 0;

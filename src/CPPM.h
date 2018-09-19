@@ -1,21 +1,21 @@
 /*
-   Class header for Arduino BreezyCPPM class library
+   Class header for Arduino CPPM class library
 
    Copyright (C) 2017 Greg Tomasch and Simon D. Levy
 
-   This file is part of BreezyCPPM.
+   This file is part of CPPM.
 
-   BreezyCPPM is free software: you can redistribute it and/or modify
+   CPPM is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-   BreezyCPPM is distributed in the hope that it will be useful,
+   CPPM is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
    You should have received a copy of the GNU General Public License
-   along with BreezyCPPM.  If not, see <http://www.gnu.org/licenses/>.
+   along with CPPM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -23,11 +23,11 @@
 #define PPM_MINPULSE  700
 #define PPM_MAXPULSE  2250
 #define PPM_SYNCPULSE 7500                                                                                                                       
-class BreezyCPPM
+class CPPM
 {
     public:
 
-        BreezyCPPM(uint8_t pin, uint8_t nchan);
+        CPPM(uint8_t pin, uint8_t nchan);
 
         void begin();
 

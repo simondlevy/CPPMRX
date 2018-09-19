@@ -1,24 +1,24 @@
 /*
-   Test program for BreezyCPPM class library
+   Test program for CPPM class library
 
    Copyright (C) 2017 Simon D. Levy
 
-   This file is part of BreezyCPPM.
+   This file is part of CPPM.
 
-   BreezyCPPM is free software: you can redistribute it and/or modify
+   CPPM is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-   BreezyCPPM is distributed in the hope that it will be useful,
+   CPPM is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
    You should have received a copy of the GNU General Public License
-   along with BreezyCPPM.  If not, see <http://www.gnu.org/licenses/>.
+   along with CPPM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <BreezyCPPM.h>
+#include "CPPM.h"
 
 // For usable pins on Arduino boards see https://www.arduino.cc/en/Reference/AttachInterrupt.
 // Other boards (Teensy, Ladybug) support interrupts on all digital pins.
@@ -26,7 +26,7 @@ static const uint8_t RXPIN = 0;
 
 static const uint8_t NCHAN  = 5;
 
-static BreezyCPPM rx(RXPIN, NCHAN);
+static CPPM rx(RXPIN, NCHAN);
 
 void setup(void)
 {
