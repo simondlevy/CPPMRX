@@ -1,5 +1,3 @@
-<img src="frskyrx.png" width=300>
-
 This repository contains a little Arduino library that uses 
 <a href="https://en.wikipedia.org/wiki/Interrupt">interrupts</a> to read
 the so-called CPPM (Combined Pulse-Pulse Modulation) signal from an R/C
