@@ -22,9 +22,9 @@
 
 // For usable pins on Arduino boards see https://www.arduino.cc/en/Reference/AttachInterrupt.
 // Other boards (Teensy, Ladybug) support interrupts on all digital pins.
-static const uint8_t RXPIN = 0;
+static const uint8_t RXPIN = 12;
 
-static const uint8_t NCHAN  = 5;
+static const uint8_t NCHAN  = 6;
 
 static CPPM rx(RXPIN, NCHAN);
 
@@ -37,13 +37,16 @@ void setup(void)
 
 void loop(void)
 {
-    uint16_t rcData[NCHAN];
+    if (rx.gotNewFrame()) {
 
-    rx.computeRC(rcData);
+        uint16_t rcData[NCHAN];
 
-    for (uint8_t k=0; k<NCHAN; ++k) {
-        Serial.print(rcData[k]);
-        Serial.print(" ");
+        rx.computeRC(rcData);
+
+        for (uint8_t k=0; k<NCHAN; ++k) {
+            Serial.print(rcData[k]);
+            Serial.print(" ");
+        }
+        Serial.println();
     }
-    Serial.println();
 }

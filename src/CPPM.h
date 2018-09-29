@@ -20,14 +20,14 @@
 
 #pragma once
 
-#define PPM_MINPULSE  700
-#define PPM_MAXPULSE  2250
-#define PPM_SYNCPULSE 7500                                                                                                                       
 class CPPM
 {
     public:
 
-        CPPM(uint8_t pin, uint8_t nchan);
+        static const uint16_t MINPULSE  = 700;
+        static const uint16_t MAXPULSE  = 2250;
+        static const uint16_t SYNCPULSE = 7500;                                                                                                                       
+         CPPM(uint8_t pin, uint8_t nchan);
 
         void begin();
 
@@ -37,8 +37,6 @@ class CPPM
 
     private:
 
-        uint8_t _pin;
+       uint8_t _pin;
         uint8_t _nchan;
-
-        static void  isr();
 };

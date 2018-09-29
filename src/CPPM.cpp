@@ -21,7 +21,7 @@
 #include "Arduino.h"
 #include "CPPM.h"
 
-static const uint8_t MAX_CHANS = 6;
+static const uint8_t MAX_CHANS = 8;
 
 static volatile uint16_t ppmTmp[MAX_CHANS];
 static volatile uint32_t startPulse;
@@ -30,29 +30,7 @@ static volatile uint16_t ppmError;
 static volatile uint16_t rcvr[MAX_CHANS];
 static volatile bool got_new_frame;
 
-CPPM::CPPM(uint8_t pin, uint8_t nchan)
-{
-    _pin = pin;
-    _nchan = nchan;
-}
-
-void CPPM::begin()
-{
-    pinMode(_pin, INPUT);
-
-    attachInterrupt(digitalPinToInterrupt(_pin), isr, RISING);
-
-    for (uint8_t k=0; k<_nchan; ++k) {
-        rcvr[k] = 1500;
-        ppmTmp[k] = 1500;
-    }
-
-    ppmCounter = MAX_CHANS;
-    ppmCounter = 0;
-    ppmError = 0;
-}
-
-void CPPM::isr()
+static void isr(void)
 {
     uint32_t stopPulse = micros();
 
@@ -60,13 +38,13 @@ void CPPM::isr()
     volatile uint32_t pulseWidth = stopPulse - startPulse;
 
     // Error sanity check
-    if (pulseWidth < PPM_MINPULSE || (pulseWidth > PPM_MAXPULSE && pulseWidth < PPM_SYNCPULSE)) {
+    if (pulseWidth < CPPM::MINPULSE || (pulseWidth > CPPM::MAXPULSE && pulseWidth < CPPM::SYNCPULSE)) {
         ppmError++;
 
         // set ppmCounter out of range so rest and (later on) whole frame is dropped
         ppmCounter = MAX_CHANS + 1;
     }
-    if (pulseWidth >= PPM_SYNCPULSE) {
+    if (pulseWidth >= CPPM::SYNCPULSE) {
         // Verify if this is the sync pulse
         if (ppmCounter <= MAX_CHANS) {
             // This indicates that we received a correct frame = push to the "main" PPM array
@@ -95,6 +73,28 @@ void CPPM::isr()
 
     // Save time at pulse start
     startPulse = stopPulse;
+}
+
+CPPM::CPPM(uint8_t pin, uint8_t nchan)
+{
+    _pin = pin;
+    _nchan = nchan;
+}
+
+void CPPM::begin()
+{
+    pinMode(_pin, INPUT);
+
+    attachInterrupt(digitalPinToInterrupt(_pin), isr, RISING);
+
+    for (uint8_t k=0; k<_nchan; ++k) {
+        rcvr[k] = 1500;
+        ppmTmp[k] = 1500;
+    }
+
+    ppmCounter = MAX_CHANS;
+    ppmCounter = 0;
+    ppmError = 0;
 }
 
 bool CPPM::gotNewFrame(void)
