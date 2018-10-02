@@ -1,24 +1,24 @@
 /*
-   Test program for CPPM class library
+   Test program for CPPMRX class library
 
    Copyright (C) 2017 Simon D. Levy
 
-   This file is part of CPPM.
+   This file is part of CPPMRX.
 
-   CPPM is free software: you can redistribute it and/or modify
+   CPPMRX is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-   CPPM is distributed in the hope that it will be useful,
+   CPPMRX is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
    You should have received a copy of the GNU General Public License
-   along with CPPM.  If not, see <http://www.gnu.org/licenses/>.
+   along with CPPMRX.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "CPPM.h"
+#include "CPPMRX.h"
 
 // For usable pins on Arduino boards see https://www.arduino.cc/en/Reference/AttachInterrupt.
 // Other boards (Teensy, Ladybug) support interrupts on all digital pins.
@@ -26,7 +26,7 @@ static const uint8_t RXPIN = 12;
 
 static const uint8_t NCHAN  = 6;
 
-static CPPM rx(RXPIN, NCHAN);
+static CPPMRX rx(RXPIN, NCHAN);
 
 void setup(void)
 {

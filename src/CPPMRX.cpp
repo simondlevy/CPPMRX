@@ -1,25 +1,25 @@
 /*
-   Implementation of CPPM class library for Arduino
+   Implementation of CPPMRX class library for Arduino
 
    Copyright (C) 2017 Greg Tomasch and Simon D. Levy
 
-   This file is part of CPPM.
+   This file is part of CPPMRX.
 
-   CPPM is free software: you can redistribute it and/or modify
+   CPPMRX is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-   CPPM is distributed in the hope that it will be useful,
+   CPPMRX is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
    You should have received a copy of the GNU General Public License
-   along with CPPM.  If not, see <http://www.gnu.org/licenses/>.
+   along with CPPMRX.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "Arduino.h"
-#include "CPPM.h"
+#include "CPPMRX.h"
 
 static const uint8_t MAX_CHANS = 8;
 
@@ -38,13 +38,13 @@ static void isr(void)
     volatile uint32_t pulseWidth = stopPulse - startPulse;
 
     // Error sanity check
-    if (pulseWidth < CPPM::MINPULSE || (pulseWidth > CPPM::MAXPULSE && pulseWidth < CPPM::SYNCPULSE)) {
+    if (pulseWidth < CPPMRX::MINPULSE || (pulseWidth > CPPMRX::MAXPULSE && pulseWidth < CPPMRX::SYNCPULSE)) {
         ppmError++;
 
         // set ppmCounter out of range so rest and (later on) whole frame is dropped
         ppmCounter = MAX_CHANS + 1;
     }
-    if (pulseWidth >= CPPM::SYNCPULSE) {
+    if (pulseWidth >= CPPMRX::SYNCPULSE) {
         // Verify if this is the sync pulse
         if (ppmCounter <= MAX_CHANS) {
             // This indicates that we received a correct frame = push to the "main" PPM array
@@ -75,13 +75,13 @@ static void isr(void)
     startPulse = stopPulse;
 }
 
-CPPM::CPPM(uint8_t pin, uint8_t nchan)
+CPPMRX::CPPMRX(uint8_t pin, uint8_t nchan)
 {
     _pin = pin;
     _nchan = nchan;
 }
 
-void CPPM::begin()
+void CPPMRX::begin()
 {
     pinMode(_pin, INPUT);
 
@@ -97,7 +97,7 @@ void CPPM::begin()
     ppmError = 0;
 }
 
-bool CPPM::gotNewFrame(void)
+bool CPPMRX::gotNewFrame(void)
 {
     bool retval = got_new_frame;
     if (got_new_frame) {
@@ -106,7 +106,7 @@ bool CPPM::gotNewFrame(void)
     return retval;
 }
 
-void CPPM::computeRC(uint16_t rcData[])
+void CPPMRX::computeRC(uint16_t rcData[])
 {
     static uint16_t rcData4Values[MAX_CHANS][4], rcDataMean[MAX_CHANS];
     static uint8_t rc4ValuesIndex = 0;

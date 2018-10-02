@@ -1,33 +1,33 @@
 /*
-   Class header for Arduino CPPM class library
+   Class header for Arduino CPPMRX class library
 
    Copyright (C) 2017 Greg Tomasch and Simon D. Levy
 
-   This file is part of CPPM.
+   This file is part of CPPMRX.
 
-   CPPM is free software: you can redistribute it and/or modify
+   CPPMRX is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-   CPPM is distributed in the hope that it will be useful,
+   CPPMRX is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
    You should have received a copy of the GNU General Public License
-   along with CPPM.  If not, see <http://www.gnu.org/licenses/>.
+   along with CPPMRX.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
 
-class CPPM
+class CPPMRX
 {
     public:
 
         static const uint16_t MINPULSE  = 700;
         static const uint16_t MAXPULSE  = 2250;
         static const uint16_t SYNCPULSE = 7500;                                                                                                                       
-         CPPM(uint8_t pin, uint8_t nchan);
+         CPPMRX(uint8_t pin, uint8_t nchan);
 
         void begin();
 
